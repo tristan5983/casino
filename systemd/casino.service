@@ -1,0 +1,31 @@
+[Unit]
+Description=Casino Backend Service
+Documentation=https://github.com/tristan5983/casino
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/casino/backend
+ExecStart=/usr/bin/node /var/www/casino/backend/src/server.js
+
+# Environment variables
+EnvironmentFile=/var/www/casino/backend/.env
+
+# Process management
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=casino-backend
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Resource limits
+LimitNOFILE=65535
+LimitNPROC=512
+
+[Install]
+WantedBy=multi-user.target
